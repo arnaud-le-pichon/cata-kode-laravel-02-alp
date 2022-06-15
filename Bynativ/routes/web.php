@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('meeting', 'MeetingController@create');
+Route::post('meeting', 'MeetingController@store');
+Route::get('meeting/{id}', 'MeetingController@fetch');
