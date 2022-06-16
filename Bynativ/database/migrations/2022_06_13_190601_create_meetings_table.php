@@ -18,7 +18,8 @@ class CreateMeetingsTable extends Migration
             $table->string('user');
             $table->string('phone')->nullable();
             $table->string('email');
-            $table->date('time')->nullable();
+            $table->string('timezone');
+            $table->dateTime('time')->nullable();
             $table->mediumText('message')->nullable();
             $table->timestamps();
         });

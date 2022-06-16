@@ -28,7 +28,8 @@ class StoreMeeting extends FormRequest
             'phone' => 'nullable|digits:10',
             'email' => 'required|email',
             'time' => 'required|date',
-            'message' => 'nullable|string'
+            'message' => 'nullable|string',
+            'timezone' => 'required|string'
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Meeting extends Model
 {
@@ -15,10 +16,12 @@ class Meeting extends Model
         'phone',
         'email',
         'time',
-        'message'
+        'message',
+        'timezone'
     ];
 
-    protected $casts = [
-        'time' => 'date:m-d-Y'
-    ];
+    public function getTimeAttribute($value)
+    {
+        return Carbon::parse($value, 'UTC')->setTimezone($this->timezone);
+    }
 }

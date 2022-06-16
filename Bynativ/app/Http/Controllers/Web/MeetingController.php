@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\StoreMeeting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use App\Services\MeetingService;
+use App\Models\Meeting;
 
 class MeetingController extends BaseController
 {
@@ -24,17 +25,11 @@ class MeetingController extends BaseController
 
         $meeting = $meetingService->create($validated);
 
-        return view('meeting-form', ['successMessage' => 'Validation success', 'meetingId' => $meeting->id]);
+        return view('meeting-form', ['successMessage' => 'Validation success', 'id' => $meeting->id]);
     }
 
-    public function fetch($id, MeetingService $meetingService)
-    {
-        $meeting = $meetingService->findOne($id);
-
-        if(!isset($meeting)) {
-            return abort(404);
-        }
- 
+    public function get(Meeting $meeting)
+    { 
         return view('meeting', ['meeting' => $meeting]);
     }
 

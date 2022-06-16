@@ -17,6 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('meeting', 'MeetingController@create');
-Route::post('meeting', 'MeetingController@store');
-Route::get('meeting/{id}', 'MeetingController@fetch');
+Route::get(
+    'meeting',
+    'MeetingController@create'
+)->name('create-meeting');
+
+Route::post(
+    'meeting',
+    'MeetingController@store'
+)->name('save-meeting');
+
+Route::get(
+    'meeting/{meeting}',
+    'MeetingController@get'
+)->name('get-meeting');
