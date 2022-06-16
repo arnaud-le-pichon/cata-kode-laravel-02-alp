@@ -7,11 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Http\Request;
-
-use DateTime;
-use DateTimeZone;
-use App\Meeting;
+use App\Services\MeetingService;
 
 class MeetingController extends BaseController
 {
@@ -22,26 +18,18 @@ class MeetingController extends BaseController
         return view('meeting-form');
     }
 
-    public function store(StoreMeeting $request)
+    public function store(StoreMeeting $request, MeetingService $meetingService)
     {
         $validated = $request->validated();
 
-        $meeting = new Meeting;
-
-        $meeting->user = $validated['user'];
-        $meeting->phone = $validated['phone'];
-        $meeting->email = $validated['email'];
-        $meeting->time = new DateTime($validated['time'], new DateTimeZone( 'UTC' ));
-        $meeting->message = $validated['message'];
-
-        $meeting->save();
+        $meeting = $meetingService->create($validated);
 
         return view('meeting-form', ['successMessage' => 'Validation success', 'meetingId' => $meeting->id]);
     }
 
-    public function fetch($id)
+    public function fetch($id, MeetingService $meetingService)
     {
-        $meeting = Meeting::find($id);
+        $meeting = $meetingService->findOne($id);
 
         if(!isset($meeting)) {
             return abort(404);
@@ -50,8 +38,8 @@ class MeetingController extends BaseController
         return view('meeting', ['meeting' => $meeting]);
     }
 
-    public function getAll()
+    public function getAll(MeetingService $meetingService)
     {
-        return Meeting::all();
+        return $meetingService->findAll();
     }
 }

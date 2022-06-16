@@ -3,7 +3,7 @@
 <h1>Meeting Creation Form</h1>
 {{session('errors')}}
 @if (isset($successMessage))
-    <p>$success</p>
+    <p>Success</p>
     <a href="/meeting/{{$meetingId}}">Consulter votre demande de rendez-vous</a>
 @endif
 <form method="POST" action="/meeting">
